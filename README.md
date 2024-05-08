@@ -11,4 +11,4 @@ Images are displayed in the list view and in its detail view. *Optional Challang
    *Optional Challange:
    Besides solving the above, if you think you can challange yourself by building a new scratch flutter mobile app
    wbase off this article using its table of content to build the listview and its content images both see in the list view and detail view
-   Here is the the Challange URL URLhttps://garagedreams.net/buyers-guide/first-gen-mini-r50-r52-r53-buyers-guide
+   Here is the the Challange URL https://garagedreams.net/buyers-guide/first-gen-mini-r50-r52-r53-buyers-guide
