@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:listview_json_parse_demo/models/product.dart';
 import 'package:scrollable_text_indicator/scrollable_text_indicator.dart';
@@ -43,15 +44,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(productName),
+        title: FittedBox(child: Text(productName)),
       ),
       body: Center(
           child: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 25,
+            ),
+            CachedNetworkImage(
+              imageUrl: product!.image,
+              placeholder: (context,url) => CircularProgressIndicator(),
+              errorWidget: (context, url, error)=> Row(
+                children: [
+                  Icon(Icons.error),
+                  Text(error.toString())
+                ],
+              ),
             ),
             Container(
                 margin: EdgeInsets.all(5.0),
@@ -60,7 +71,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0))),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             Flexible(
