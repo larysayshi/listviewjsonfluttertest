@@ -43,50 +43,59 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: FittedBox(child: Text(productName)),
-      ),
-      body: Center(
-          child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            const SizedBox(
-              height: 25,
-            ),
-            CachedNetworkImage(
-              imageUrl: product!.image,
-              placeholder: (context,url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error)=> Row(
-                children: [
-                  Icon(Icons.error),
-                  Text(error.toString())
-                ],
-              ),
-            ),
-            Container(
-                margin: EdgeInsets.all(5.0),
-                child: Text("Category : " + (product!.category.toString()),
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0))),
-            const SizedBox(
-              height: 25,
-            ),
-            Flexible(
-                child: ScrollableTextIndicator(
-              text: Text(
-                "" + (product!.description.toString()),
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                ),
-              ),
-            )),
-          ],
+        appBar: AppBar(
+          title: FittedBox(child: Text(productName)),
         ),
-      )),
-    );
+        body: SafeArea(
+          child: Center(
+              child: SingleChildScrollView(
+                  physics: const ScrollPhysics(),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Flexible(
+                          child: CachedNetworkImage(
+                            imageUrl: product!.image,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Row(
+                              children: [
+                                Icon(Icons.error),
+                                Text(error.toString())
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                            margin: EdgeInsets.all(5.0),
+                            child: Text(
+                                "Category : " + (product!.category.toString()),
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0))),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Flexible(
+                            child: ScrollableTextIndicator(
+                          text: Text(
+                            "" + (product!.description.toString()),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        )),
+                      ],
+                    ),
+                  ))),
+        ));
   }
 }

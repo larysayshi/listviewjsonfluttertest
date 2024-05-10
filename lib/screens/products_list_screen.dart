@@ -105,57 +105,57 @@ class _ProductListScreenState extends State<ProductListScreen> {
           scrolledUnderElevation: 0,
           title: FittedBox(child: Text("First Gen MINI R50/R52/R53 Guide")),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: ElevatedButton(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              children: [
+                ElevatedButton(
                     onPressed: _refreshData, child: Text("Load Data")),
-              ),
-              searchBar(),
-              Container(
-                  color: Colors.grey,
-                  width: MediaQuery.of(context).size.width,
-                  child: Text(
-                    "↑↑Pull to Refresh↑↑",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  )),
-              Expanded(
-                child: FutureBuilder(
-                  future: fetchResult,
-                  builder: (BuildContext context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                      case ConnectionState.waiting:
-                      case ConnectionState.active:
-                        {
-                          return loadingIndicator();
-                        }
-                      case ConnectionState.done:
-                        {
-                          if (fetchSuccess == true) {
-                            return fetchSuccessView();
-                          } else if (fetchSuccess == false) {
-                            return fetchFailView(context);
-                          } else {
+                searchBar(),
+                Container(
+                    color: Colors.grey,
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      "↑↑Pull to Refresh↑↑",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
+                    )),
+                Expanded(
+                  child: FutureBuilder(
+                    future: fetchResult,
+                    builder: (BuildContext context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.none:
+                        case ConnectionState.waiting:
+                        case ConnectionState.active:
+                          {
                             return loadingIndicator();
                           }
-                        }
-                    }
-                  },
+                        case ConnectionState.done:
+                          {
+                            if (fetchSuccess == true) {
+                              return fetchSuccessView();
+                            } else if (fetchSuccess == false) {
+                              return fetchFailView(context);
+                            } else {
+                              return loadingIndicator();
+                            }
+                          }
+                      }
+                    },
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              )
-            ],
+                const SizedBox(
+                  height: 30,
+                )
+              ],
+            ),
           ),
-        ),
+        )
+
       ),
     );
   }
@@ -216,14 +216,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
     });
   }
 
-  Padding searchBar() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
+  Column searchBar() {
+    return Column(
         children: [
-          const SizedBox(
-            height: 10,
-          ),
           TextField(
             controller: searchController,
             onChanged: (value) => _runFilter(value),
@@ -231,10 +226,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 labelText: 'Search', suffixIcon: Icon(Icons.search)),
           ),
           const SizedBox(
-            height: 10,
+            height: 5,
           ),
         ],
-      ),
     );
   }
 }
